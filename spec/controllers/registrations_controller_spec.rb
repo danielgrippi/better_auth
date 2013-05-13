@@ -12,15 +12,14 @@ describe RegistrationsController do
 
   describe "#create" do
     let(:params) do
-      { user: {
+      { registration: {
           email: 'test@example.com'
         }
       }.stringify_keys
     end
 
     before do
-      User.stub(:create)
-      RegistrationCode.stub(:create) { double(token: 'foo') }
+      Registration.stub(:create) { double(token: 'foo') }
     end
 
     describe "response" do
@@ -32,15 +31,9 @@ describe RegistrationsController do
       it { should render_template :create }
     end
 
-    it "creates a user" do
-      User.should_receive(:create).with(email: 'test@example.com')
-
-      post :create, params
-    end
-
     it "creates a registration code" do
       SecureRandom.stub(:hex) { "foo" }
-      RegistrationCode.should_receive(:create).with(token: 'foo')
+      Registration.should_receive(:create).with(token: 'foo', email: 'test@example.com')
 
       post :create, params
     end

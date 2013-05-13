@@ -13,7 +13,8 @@
 
 ActiveRecord::Schema.define(:version => 20130513023904) do
 
-  create_table "registration_codes", :force => true do |t|
+  create_table "registrations", :force => true do |t|
+    t.string   "email",                    :null => false
     t.string   "token",      :limit => 30, :null => false
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
